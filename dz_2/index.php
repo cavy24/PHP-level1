@@ -13,7 +13,7 @@ echo "<hr>";
 	if ($a >= 0 && $b >= 0) {
 		echo $a - $b;
 	}
-	else if ($a <= 0 && $b <= 0) {
+	if ($a < 0 && $b < 0) {
 		echo $a * $b;
 	}
 	else {
@@ -89,22 +89,17 @@ echo "<hr>";
 	function mathOperation($a2, $b2, $oper) {
 		switch($oper) {
 			case '+':
-				$res = sum($a2, $b2);
-				break;
+				return sum($a2, $b2);
 			case '-':
-				$res = diff($a2, $b2);
-				break;
+				return diff($a2, $b2);
 			case '*':
-				$res = multipl($a2, $b2);
-				break;
+				return multipl($a2, $b2);
 			case '/':
-				$res = division($a2, $b2);
-				break;
+				return division($a2, $b2);
 		}
-		return $res;
 	}
 	
-	echo mathOperation(8, 4, '/');
+	echo mathOperation(8, 4, '*');
 	
 echo "<br><br>" . "Задание 5" . "<br>";
 echo "<hr>";
@@ -115,18 +110,20 @@ echo "<br><br>" . "Задание 6" . "<br>";
 echo "<hr>";
 
 function powRequrs($val, $pow) {
-	if($val === 0) {
+	if ($val === 0) {
 		return 0;
-	} else if($val === 1 || $pow === 0) {
+	} else if ($val === 1 || $pow === 0) {
 		return 1;
-	} else {
-		if($pow === 1) {
+	} else if ($pow === 1) {
 			return $val;
+	} else if ($pow < 0) {
+		return  1 / powRequrs($val, -$pow);
+	} else {
+		return $val * powRequrs($val, $pow - 1);
 		}
-		return $val *= powRequrs($val, $pow - 1);
-	}
+	
 }
-echo powRequrs(10, 3);
+echo powRequrs(5, -3);
 
 echo "<br><br>" . "Задание 7" . "<br>";
 echo "<hr>";
@@ -137,7 +134,8 @@ function getCurrentTime($currTime) {
 	//$timeMinute = date("i");
 	$timeExplode = explode(" ", $time); 
 	if($timeExplode[0] < 10) {
-		$timeExplodeHour = str_replace("0", "", $timeExplode[0]);
+		//$timeExplodeHour = str_replace("0", "", $timeExplode[0]);
+		$timeExplodeHour = $timeExplode[0][1];
 	} else {
 		$timeExplodeHour = $timeExplode[0];
 	}
@@ -152,6 +150,13 @@ function getCurrentTime($currTime) {
 			$hours = " часов ";
 			break;
 	}
+	/*if ($timeExplodeHour%100 == 0 || ($timeExplodeHour%100 >= 5 && $timeExplodeHour%100 <= 20)) {
+		$hours = " часов ";
+	} else if ($timeExplodeHour%10 == 1) {
+		$hours = " час ";
+	} else {
+		$hours = " часа ";
+	}*/
 	$timeExplodeMinute = $timeExplode[1];
 	switch($timeExplodeMinute) {
 		case ($timeExplodeMinute >= 10 && $timeExplodeMinute <= 20):
@@ -167,6 +172,13 @@ function getCurrentTime($currTime) {
 			$minutes = " минут";
 			break;	
 	}
+	/*if ($timeExplodeMinute%10 == 0 || ($timeExplodeMinute%10 >= 5 && $timeExplodeMinute%10 <= 9) || ($timeExplodeMinute%100 >= 11 && $timeExplodeMinute%100 <= 14)) {
+		$minutes = " минут";
+	} else if ($timeExplodeMinute%10 == 1){
+		$minutes = " минута";
+	} else {
+		$minutes = " минуты";
+	}*/
 	return $currTime = "<b>Текущее время: <b> " . $timeExplodeHour . $hours . $timeExplodeMinute . $minutes;
 }
 echo(getCurrentTime($currTime));
