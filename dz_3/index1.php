@@ -2,7 +2,11 @@
     $title = "Title";
 	$h1 = "Header";
 	$year = date("d.m.Y H:i:s D");
-	$innerLi = ['home' => ['main', 'about'], 'archive' => ['blogs', 'comments'], 'contact' => ['office', 'store']];
+	$innerLi = [
+	'home' => ['main', 'about'], 
+	'archive' => ['blogs', 'comments'], 
+	'contact' => ['office', 'store']
+	];
 		
 ?>
 <!DOCTYPE html>
@@ -17,6 +21,22 @@
     <h1><?=$h1?></h1>
     <ul>
 	<?php
+	/*
+	echo '<ul>';
+	foreach($innerLi as $key => $val) { ?>
+	<li> <?php echo $key; ?>
+		<ul>
+			<?php 
+				foreach($val as $item) { ?>
+				<li> <?php echo $item; ?> </li> // или <?=$item;?>
+				<?php }
+				?>
+		</ul>
+	</li>
+	<?php }
+	echo '</ul>';
+	?>
+	*/
 	foreach($innerLi as $inners => $inner) {
 		echo '<li><a href="#">' . $inners . '</a></li>';
 		foreach($inner as $valueInner) {

@@ -20,6 +20,16 @@ while($num <= 100) {
 	}
 	echo $num - 1 . " ";
 }
+
+/*
+$i = 0;
+while ($i <= 100) {
+	if ($i%3 === 0) {
+		echo "$i ";
+	}
+	$i++;
+}
+*/
    
 echo "<br><br>" . "Задание 2" . "<br>";
 echo "<hr>";
@@ -65,9 +75,13 @@ $country = [];
 $country['Московская область'] = ['Москва', 'Зеленоград', 'Клин'];
 $country['Ленинградская область'] = ['Санкт-Петербург', 'Всеволожск', 'Павловск', 'Кронштадт'];
 $country['Рязанская область'] = ['Рязань', 'Касимов', 'Сасово', 'Скопин', 'Шацк', 'Кадом'];
-//echo "<pre>";
-//print_r($country);
-//echo "</pre>";
+/*
+$country = [
+	'Московская область' => ['Москва', 'Зеленоград', 'Клин'],
+	'Ленинградская область' => ['Санкт-Петербург', 'Всеволожск', 'Павловск', 'Кронштадт'],
+	'Рязанская область' => ['Рязань', 'Касимов', 'Сасово', 'Скопин', 'Шацк', 'Кадом']
+];
+*/
 foreach ($country as $regions => $city) {
 	echo "<br>" . $regions . ":<br>";
 	echo \implode(', ', $city);
@@ -89,6 +103,11 @@ $strTranslit = 'я учу язык программирования пхп!';
 
 function getTranslit($str) {
 	$alphabetTranslit = ['а' => 'a', 'б' => 'b', 'в' => 'v', 'г' => 'g', 'д' => 'd', 'е' => 'e', 'ё' => 'yo', 'ж' => 'zh', 'з' => 'z', 'и' => 'i', 'й' => 'y', 'к' => 'k', 'л' => 'l', 'м' => 'm', 'н' => 'n', 'о' => 'o', 'п' => 'p', 'р' => 'r', 'с' => 's', 'т' => 't', 'у' => 'u', 'ф' => 'f', 'х' => 'h', 'ц' => 'ts', 'ч' => 'ch', 'ш' => 'sh', 'щ' => 'shch', 'ы' => 'y', 'ь' => ' \'', 'э' => 'e', 'ю' => 'yu', 'я' => 'ya'];
+	/*
+	$str = mb_strtolower($str);
+	$res = strtr($str, $alphabetTranslit); 
+	return $res;
+	*/
 	foreach($alphabetTranslit as $letterRu => $letterTrans) {
 		$str= str_replace($letterRu, $letterTrans, $str );
 	}
@@ -105,8 +124,7 @@ echo "<hr>";
 $strInitial = 'I learn PHP!';
 
 function getReplace($str) {
-$strReplace = str_replace(' ', '_', $str);
-return $strReplace;
+	return str_replace(' ', '_', $str);
 }
 
 echo getReplace($strInitial);
@@ -129,7 +147,7 @@ echo "<hr>";
 for(…){// здесь пусто}
 */
 
-for($i = 0; $i <= 9; print_r($i), $i++) {}
+for($i = 0; $i <= 9; print $i++) {}
 	
 echo "<br><br>" . "Задание 8" . "<br>";
 echo "<hr>";
@@ -139,9 +157,16 @@ echo "<hr>";
 
 foreach ($country as $regions => $city) {
 	echo "<br>" . $regions . ":<br>";
+	/*
+	for($i = 0; $i < count($city); $i++) {
+		if (\mb_substr($city, 0, 1) == "К") {
+			echo "$city ";
+		}
+	}
+	*/
 	$cityK = [];
 	foreach($city as $cityMath) {
-		if(mb_substr($cityMath, 0, 1) === 'К') {
+		if(\mb_substr($cityMath, 0, 1) === 'К') {
 			$cityK[] = $cityMath;
 		}
 	}
@@ -158,6 +183,12 @@ echo "<hr>";
 */
 
 echo (getReplace(getTranslit('мне нравится язык пхп.')));
+
+/*
+function beauty_url($text) {
+	return getReplace(' ', '_', getTranslit($text));
+}
+*/
 
 ?>
 </body>
