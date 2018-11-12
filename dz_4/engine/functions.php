@@ -4,10 +4,28 @@
 define('ERROR_NOT_FOUND', 1);
 define('ERROR_TEMPLATE_EMPTY', 2);
 
-
-function callEcho() 
+$array1 = [2, 6];
+$array2 = [4, 8];
+function checkIntersection($array1 = [], $array2 = []) 
 {
-	echo "Это страница " . $_SERVER[DOCUMENT_ROOT];
+	$newArray1 = addElemInArray($array1);
+	$newArray2 = addElemInArray($array2);
+	$resArr = array_intersect($newArray1, $newArray2);
+	if (count($resArr) > 0) {
+		echo "Отрезки пересекаются";
+	}
+	else { 
+		echo "Отрезки не пересекаются";
+	}
+}
+
+function addElemInArray($array = []) {
+	$c = $array[0];
+	$d = $array[count($array) - 1] - $c;
+	for($i = 0; $i <= $d; $i++) {
+		$array[$i] = $c + $i;
+	}
+	return $array;
 }
 
 function showImage($address) 

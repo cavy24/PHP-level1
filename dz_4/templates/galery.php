@@ -14,6 +14,9 @@ showImage("img/");
 ?>
 
 </div>
-<?php callEcho();?>
+<?php 
+$ar1 = [-5, 2];
+$ar2 = [-4, 8];
+checkIntersection($ar1, $ar2);?>
 </body>
 </html>
