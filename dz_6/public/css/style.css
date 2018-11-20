@@ -43,9 +43,35 @@ h2 {
 	color: blue
 }
 
+/*Отзывы*/
+
 .review ul {
 	list-style-type: none;
 }
 .review ul li {
 	margin-bottom: 15px;
+}
+.reviews form {
+	margin-left: 40px;
+}
+
+/*Каталог*/
+.catalog img {
+	width: 200px;
+}
+.catalog .catalog_product {
+	width: 300px;
+    border: 2px solid blue;
+    text-align: center;
+    padding: 10px;
+	margin: 20px
+}
+
+/*Продукт*/
+
+.product {
+	text-align: center
+}
+.product img {
+	width: 50%
 }

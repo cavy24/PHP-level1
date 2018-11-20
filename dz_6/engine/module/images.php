@@ -2,7 +2,7 @@
 
 require_once LIB_DIR . 'db.php';
 
-$images = getAssocResult("select * from images order by counter desc");
+$images = getAssocResult("select * from images order by counter desc", DB_IMG);
 
 $vars = [
     'title_main' => 'Картинная галерея',
