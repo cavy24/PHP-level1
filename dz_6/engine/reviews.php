@@ -4,22 +4,21 @@ require_once LIB_DIR . 'db.php';
 require_once LIB_DIR . 'functions.php';
 
 function updateBase($values = []) {
-	
-	if($values['addreview'] !== null) {
-		foreach($values as $key => $val) {
+	foreach($values as $key => $val) {
 		$valuesNew[$key] = checkValue($val);
 	}
+	if($values['addreview'] !== null) {
+		
 		//echo $date;
 		$sql = "insert into review (`name`, `text`, `created_at`) values ('" . $valuesNew['name'] . "', '" . $valuesNew['review'] . "', '" . $valuesNew['date'] . "');";
 		//echo $sql;
 		executeQuery($sql, $database = DB_REVIEW);
 	}
 	if($values['delreview'] !== null) {
-		echo "<pre>";
-		var_dump($values);
-		echo "</pre>";
-		//echo $values['id'];
-		$sql = "delete from review where id = " . $values['id'];
+		/*echo "<pre>";
+		var_dump($valuesNew);
+		echo "</pre>";*/
+		$sql = "delete from review where id = " . $valuesNew['id'];
 		//echo $sql;
 		executeQuery($sql, $database = DB_REVIEW);
 	}

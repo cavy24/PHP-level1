@@ -17,9 +17,9 @@
     <h4><?= $review['name'] ?></h4>
     <p><?= $review['text'] ?> </p>
     <p><?= $review['created_at'] ?></p>
-	<p name = "id"><?= $review['id'] ?></p>
+	<input type = "hidden" name = "id" value = <?= $review['id'] ?> />
 	<input class = "reviews-btn" type = "submit" value = "Удалить отзыв" name = "delreview" />
-<?php endforeach; ?>
+<?php endforeach;?>
 </form>
 </div>
 <div class = "review">
