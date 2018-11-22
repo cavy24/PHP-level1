@@ -1,0 +1,18 @@
+h1 {
+	color: red;
+}
+
+img {
+	width: 100px;
+	height: 100px;
+	padding: 15px 15px 0 15px;
+}
+.images .images-wrapper {
+	display: inline-block;
+	width: 160px;
+}
+.title-img {
+	display: inline-block;
+    width: 130px;
+	margin-left: 25px
+}
