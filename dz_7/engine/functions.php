@@ -6,6 +6,10 @@ function checkValue($value) {
 	return trim((string)htmlspecialchars(strip_tags($value)));
 }
 
+function escapeString($db, $str) {
+    return mysqli_real_escape_string($db, htmlspecialchars(strip_tags($str)));
+}
+
 /**
  * Записываем лог в файл /var/logs_{$suffix}.log
  * @param mixed  $s

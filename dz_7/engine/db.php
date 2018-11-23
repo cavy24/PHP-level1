@@ -36,3 +36,16 @@ function connect($database) {
 
     return $db;
 }
+
+function getRowResult($sql, $database){
+    $array_result = getAssocResult($sql, $database);
+
+    if(isset($array_result[0])){
+        $result = $array_result[0];
+    } else {
+        $result = null;
+    }
+
+
+    return $result;
+}

@@ -14,7 +14,7 @@ function showProduct() {
 function addProduct($values = []) {
 	if(isset($values['addproduct'])) {
 		if($values['addproduct'] !== null) {
-		checkValue($values['addproduct']);
+		//checkValue($values['addproduct']);
 		$_SESSION['id_product'] = $values['id']; 
 		$_SESSION['quantity'] = 1;
 		}

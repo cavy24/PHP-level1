@@ -12,11 +12,10 @@
 
 <div>
 <ul>
-	<li>Задание 1: <a href = <?=WWW_ROOT.'/?module=calculator'?> >файл calculator.php</a></li>
-	<li>Задание 2: <a href = <?=WWW_ROOT.'/?module=calculator_new'?> >файл calculator_new.php</a></li>
-	<li>Задание 3: <a href = <?=WWW_ROOT.'/?module=reviews'?> >файл reviews.php</a></li>
-	<li>Задание 4: <a href = <?=WWW_ROOT.'/?module=catalog'?> >файл catalog.php</a></li>
+	<li>Задание 1: <a href = <?=WWW_ROOT.'/?module=bascket'?> >файл bascket.php</a></li>
+	<li>Задание 2: <a href = <?=WWW_ROOT.'/?module=product&id=1'?> >файл product.php</a></li>
 </ul>
+<a href = <?=WWW_ROOT . '/?module=logout'?> >Закончить сессию</a>
 </div>
 </body>
 </html>

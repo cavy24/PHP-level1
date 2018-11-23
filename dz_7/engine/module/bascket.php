@@ -10,5 +10,6 @@ $vars = [
 	'delGood' => delGood(),
 	'addGoog' => addGoog()
 ];
-
+echo "<br>SESSION: ";
+var_dump($_SESSION);
 require_once TPL_DIR . 'bascket.php';
