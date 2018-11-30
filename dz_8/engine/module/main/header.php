@@ -3,7 +3,9 @@ $menu = [
 	'Главная' => '/src/public',
 	'Галерея' => '/src/public/?module=images',
 	'Каталог' => '/src/public/?module=catalog',
-	'Блог' => '/src/public/?module=reviews'
+	'Блог' => '/src/public/?module=reviews',
+	'Личный кабинет' => '/src/public/?module=account',
+	'Корзина' => '/src/public/?module=basket',
 ];
 
 $varsHeader = [

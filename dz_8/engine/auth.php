@@ -53,6 +53,9 @@ function authWithCredentials(){
 
         // сохраним данные в сессию
         $_SESSION['user'] = $user['login'];
+		$sql = "select `id` from user where `login` = '{$_SESSION['user']}'";
+		$userId = getRowResult($sql, DB_USER);
+		$_SESSION['user_id'] = $userId['id'];
     }
     return $isAuth;
 }

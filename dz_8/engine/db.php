@@ -2,6 +2,16 @@
 
 require_once SITE_ROOT . 'config/config.php';
 
+function addMaxValueFromDB($param, $table, $db) {
+	$sqlmaxValue = "select max({$param}) from `{$table}`;";
+	//echo $sqlmaxValue . "   ";
+	$value = getRowResult($sqlmaxValue, $db);
+	//var_dump($value);
+	$maxValue = (int)$value["max({$param})"];
+	//echo $maxValue . "   ";
+	return $maxValue;
+}
+
 function getAssocResult($sql, $database){
     $result = executeQuery($sql, $database);
 

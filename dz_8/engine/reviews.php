@@ -11,7 +11,6 @@ function manageReview($values = []) {
 		//echo $date;
 		$sql = "insert into review (`name`, `text`, `created_at`) values ('" . $valuesNew['name'] . "', '" . $valuesNew['review'] . "', '" . $valuesNew['date'] . "');";
 		//echo $sql;
-		executeQuery($sql, DB_REVIEW);
 	}
 	if($values['delreview'] !== null) {
 		/*echo "<pre>";
@@ -19,15 +18,16 @@ function manageReview($values = []) {
 		echo "</pre>";*/
 		$sql = "delete from review where id = " . $valuesNew['id'];
 		//echo $sql;
-		executeQuery($sql, DB_REVIEW);
 	}
+	executeQuery($sql, DB_REVIEW);
 }
 function showReviews() {
-	$sql = "select * from review order by `created_at` desc";
+	$sql = "select * from review order by `created_at` desc;";
 	$res = getAssocResult($sql, DB_REVIEW);
 	/*echo "<pre>";
-	var_dump($res[0]);
-	echo "</pre>";*/
+	var_dump($res);
+	echo "</pre>";
+	echo "<br>" . $sql;*/
 	return $res;
 	
 }

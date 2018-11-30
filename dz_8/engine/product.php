@@ -5,12 +5,13 @@ require_once LIB_DIR . 'functions.php';
 
 function showProduct() {
 	checkValue($_GET['id']);
+	$_SESSION['product_id'] = $_GET['id'];
 	$sql = "select * from product where id=" . $_GET['id'];
 	$res = getRowResult($sql, DB_MARKET);
 	return $res;
 }
 
-function addProduct($values = []) {
+/*function addProduct($values = []) {
 	if(isset($values['addproduct'])) {
 		if($values['addproduct'] !== null) {
 		//checkValue($values['addproduct']);
@@ -18,4 +19,4 @@ function addProduct($values = []) {
 		$_SESSION['quantity'] = 1;
 		}
 	}
-}
+}*/

@@ -15,8 +15,7 @@ function calculator(val) {
 	console.log(numbers);
 	let number1 = +numbers[0].value;
 	let number2 = +numbers[1].value;
-	//console.log(numbers);
-	numAdd = 0;
+	let numAdd = 0;
 	if(isNumeric(number1) && isNumeric(number2)) {
 	switch(val) {
 		case '+': numAdd = number1 + number2; break;

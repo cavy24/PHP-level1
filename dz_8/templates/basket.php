@@ -10,14 +10,18 @@
 	<h3><?= $good['name'] ?></h3>
     <p class = "basket_goods_inner"><img src = <?= IMG_DIR . $good['image_path'] ?> > </p>
     <p class = "basket_goods_inner"><?= $good['price'] ?></p>
-    <p class = "basket_goods_inner"><?= $good['quantity'] ?></p>
-    <p class = "basket_goods_inner"><?= $good['price'] * $good['quantity'] ?> рублей</p>
+    <p class = "basket_goods_inner"><?= $good['amount'] ?></p>
+    <p class = "basket_goods_inner"><?= $good['price'] * $good['amount'] ?> рублей</p>
 	<input type = "hidden" name = "id" value = <?= $good['id'] ?> />
 	<input type = "hidden" name = "amount" value = <?= $good['quantity'] ?> />
-	<input class = "basket_goods_inner reviews-btn" type = "submit" value = "Удалить" name = "delGood" />
+	<p class = "basket_goods_inner"><button class = "btn btn-good-plus basket_goods_inner" data-id = <?=$good['id']?> data-action = "up">Добавить</button><p/>
+	<p class = "basket_goods_inner"><button class = "btn btn-good-minus basket_goods_inner" data-id = <?=$good['id']?> data-action = "down">Убавить</button><p/>
+	<p class = "basket_goods_inner"><button class = "btn btn-good-del basket_goods_inner" data-id = <?=$good['id']?> data-action = "del">Удалить</button><p/>
 	</form>
 </div>
-
 <?php endforeach;?>
+<div class = "basket_sum">
+	<p class = "basket_goods_inner">Общая сумма вашего заказа: <?=$vars['sumGoods']?> рублей</p>
+</div>
 </div>
 <?php require_once LIB_DIR. 'module/main/footer.php'; ?>

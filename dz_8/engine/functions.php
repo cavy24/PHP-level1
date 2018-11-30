@@ -1,7 +1,18 @@
 <?php
 
-/*Функция проверки входных данных*/
+/*Считаем общую сумму заказа*/
+function addSumArrValues($func) {
+	$arrValues = $func;
+	//echo '$arrValues' . "  ";
+	//var_dump($arrValues);
+	if(empty($arrValues)) return 0;
+	foreach ($arrValues as $value) {
+		$sumArrValues[] = (int)$value['price'] * (int)$value['amount'];
+	}
+	return array_sum($sumArrValues);
+}
 
+/*Функция проверки входных данных*/
 function checkValue($value) {
 	return trim((string)htmlspecialchars(strip_tags($value)));
 }

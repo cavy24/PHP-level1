@@ -4,6 +4,11 @@ h2 {
 	text-align: center;
 	font-size: 40px;
 }
+h3 {
+	color: #61307b;
+	text-align: center;
+	font-size: 30px;
+}
 .images .images-wrapper h3 {
 	text-align: center;
 	width: 140px;
@@ -78,9 +83,9 @@ h2 {
 
 /*Корзина*/
 
-.basket .basket_goods_inner {
+.basket_goods_inner {
 	display: inline-block;
-	margin-right: 20px;
+	margin-right: 10px;
 }
 .basket img {
 	 border: 2px solid yellow;
@@ -106,4 +111,10 @@ h2 {
 .clearfix {
      clear: both;
     *zoom: 1;
+}
+
+/*Админ: заказы*/
+
+.orders_order {
+	border: 2px solid grey;
 }
