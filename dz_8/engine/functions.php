@@ -3,8 +3,6 @@
 /*Считаем общую сумму заказа*/
 function addSumArrValues($func) {
 	$arrValues = $func;
-	//echo '$arrValues' . "  ";
-	//var_dump($arrValues);
 	if(empty($arrValues)) return 0;
 	foreach ($arrValues as $value) {
 		$sumArrValues[] = (int)$value['price'] * (int)$value['amount'];

@@ -2,16 +2,14 @@
 
 require_once SITE_ROOT . 'config/config.php';
 
-function addMaxValueFromDB($param, $table, $db) {
+function getMaxValueFromDB($param, $table, $db) {
 	$sqlmaxValue = "select max({$param}) from `{$table}`;";
-	//echo $sqlmaxValue . "   ";
 	$value = getRowResult($sqlmaxValue, $db);
-	//var_dump($value);
 	$maxValue = (int)$value["max({$param})"];
-	//echo $maxValue . "   ";
 	return $maxValue;
 }
 
+/*Получение массива значений из ДБ*/
 function getAssocResult($sql, $database){
     $result = executeQuery($sql, $database);
 
@@ -20,6 +18,18 @@ function getAssocResult($sql, $database){
         $arrayResult[] = $row;
 
     return $arrayResult;
+}
+
+/*Получение строки значений из ДБ*/
+function getRowResult($sql, $database){
+    $array_result = getAssocResult($sql, $database);
+
+    if(isset($array_result[0])){
+        $result = $array_result[0];
+    } else {
+        $result = null;
+    }
+    return $result;
 }
 
 //Функция выполнения запроса к БД
@@ -36,26 +46,11 @@ function connect($database) {
 	mysqli_set_charset($db, "utf8");
 	if (!mysqli_set_charset($db, "utf8")) {
     printf("Ошибка при загрузке набора символов utf8: %s\n", mysqli_error($db));
-	}/* else echo "Текущий набор символов: " . mysqli_character_set_name($db);*/
-	
-	//printf("Изначальная кодировка: %s\n", $mysqli->character_set_name($db));
+	}
     if (!$db) {
         echo 'Ошибка: Невозможно установить соединение с MySQL.'. PHP_EOL;
         exit;
     }
 
     return $db;
-}
-
-function getRowResult($sql, $database){
-    $array_result = getAssocResult($sql, $database);
-
-    if(isset($array_result[0])){
-        $result = $array_result[0];
-    } else {
-        $result = null;
-    }
-
-
-    return $result;
 }

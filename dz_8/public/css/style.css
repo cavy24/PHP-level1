@@ -6,7 +6,6 @@ h2 {
 }
 h3 {
 	color: #61307b;
-	text-align: center;
 	font-size: 30px;
 }
 .images .images-wrapper h3 {
@@ -117,4 +116,21 @@ h3 {
 
 .orders_order {
 	border: 2px solid grey;
+}
+
+/*Админ: товары*/
+
+.products img {
+	width: 100px;
+}
+
+.products .products_product_img {
+	width: 100px;
+	border: 2px solid yellow;
+}
+.products textarea {
+	margin-bottom: -5px;
+}
+.products .products_product p {
+	display: inline-block;
 }

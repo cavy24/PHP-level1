@@ -3,71 +3,58 @@
 require_once LIB_DIR . 'db.php';
 require_once LIB_DIR . 'functions.php';
 
+/*При открытии страницы отображаются все заказы*/
 function showGoods() {
 	$sqlShowGoods = "select product.id, product.name, product.image_path, product.price, `orders`.amount from product inner join `orders` on product.id = `orders`.product_id where `orders`.user_id = {$_SESSION['user_id']} && `orders`.amount <> 0";
 	$goods = getAssocResult($sqlShowGoods, DB_MARKET);
-	//var_dump($goods);
-	//if(empty($goods)) return;
 	return $goods;
 }
 
+/*Получение одного параметра из БД*/
 function selectRowParamToMarket($table,$param, $conditions) {
 	$sql = "select {$param} from {$table} where {$conditions};";
 	$value = getRowResult($sql, DB_MARKET);
 	return $value;
 }
-/*Добавление товара в корзину на странице product&id=[number]*/
-function addGoodToBasket($userId, $productId) {
-	//Проверяем, есть ли товар на складе
-	$sqlParamProduct = "select name, quantity from `product` where id = {$productId};";
-	$paramProduct = getRowResult($sqlParamProduct, DB_MARKET);
-	if(isset($paramProduct['quantity']) && $paramProduct['quantity'] > 0) {
-		//Проверяем, есть ли такой товар у этого покупателя в корзине
-		$amount = selectRowParamToMarket('orders', 'amount', "user_id = {$userId} and product_id = {$productId}");// ф-ция selectRowParamToMarket как частный случай оставлена в basket.php
-		//echo "<br>" . 'amount' . "<br>";
-		//var_dump($amount);
-		if($amount['amount'] > 0) {
-			$sqlGood = "update `orders` set amount = amount + 1, created_at = '" . date("Y-m-d H:i:s") . " ' where user_id = {$userId} and product_id = {$productId};";	
-		} else {
-			//Вычисляем номер заказа
-			$orderNumberNew = (addMaxValueFromDB('order_number', 'orders', DB_MARKET)) + 1;// ф-ция addMaxValueFromDB - в db.php
-			$sqlGood = "insert into `orders` (`user_id`, `product_id`, `amount`, `order_number`, `created_at`) values ({$userId},  {$productId}, 1, {$orderNumberNew}, '" . date("Y-m-d H:i:s") . "');";
-	}
-	$good = executeQuery($sqlGood, DB_MARKET);
-	//Если запрос в БД не прошёл
-	if(!$good) {
-		echo "Попытка не удалась. Попробуйте ещё раз!";
-	} else {
-		//В случае удачи уменьшаем кол-во товара на складе на 1
-		echo "Товар в корзине";
-		$sqlSubstrQuantity = "update product set quantity = quantity - 1 where id = {$productId};";
-		executeQuery($sqlSubstrQuantity, DB_MARKET);
-	}
-	} else echo 'К сожалению, товар "' . $paramProduct['name'] .  '" закончился';
-	return $good;
-}
 
 function changeGoodToBasket($userId, $productId, $action) {
-	//echo "<br>" . $action . "<br>";
-	if($action === 'up') {
-		$sql = "update `orders` set amount = amount + 1, created_at = '" . date("Y-m-d H:i:s") . " ' where user_id = {$userId} and product_id = {$productId};";
-		$sqlChange = "update product set quantity = quantity - 1 where id = {$productId};";
+	if($action === 'up' || $action === 'put') { //добавить кол-во товара или положить товар в корзину
+		//Проверка кол-ва товара на складе
+		$quantity = selectRowParamToMarket('product', 'quantity', "id = {$productId}");
+		if(isset($quantity['quantity']) && $quantity['quantity'] > 0) {
+			//Проверяем, есть ли такой товар у этого покупателя в корзине
+			$amount = selectRowParamToMarket('orders', 'amount', "user_id = {$userId} and product_id = {$productId}");// ф-ция selectRowParamToMarket как частный случай оставлена в basket.php	
+			if($amount['amount'] === null || $amount['amount'] === '') {
+			//Вычисляем номер заказа
+			$orderNumberNew = (getMaxValueFromDB('order_number', 'orders', DB_MARKET)) + 1; // ф-ция getMaxValueFromDB - в db.php
+			$sqlGood = "insert into `orders` (`user_id`, `product_id`, `amount`, `order_number`, `created_at`, `status`) values ({$userId},  {$productId}, 1, {$orderNumberNew}, '" . date("Y-m-d H:i:s") . "', 'Резерв');";
+			} else {$sqlGood = "update `orders` set amount = amount + 1, created_at = '" . date("Y-m-d H:i:s") . " ' where user_id = {$userId} and product_id = {$productId};";
+		}
+		$sqlProduct = "update product set quantity = quantity - 1 where id = {$productId};";
+		} else {
+			return 0;
+		}
 	}
-	if($action === 'down') {
-		$sql = "update `orders` set amount = amount - 1, created_at = '" . date("Y-m-d H:i:s") . " ' where user_id = {$userId} and product_id = {$productId};";
-		$sqlChange = "update product set quantity = quantity + 1 where id = {$productId};";
-	}
-	if($action === 'del') {
-		$sql = "delete from`orders` where user_id = {$userId} and product_id = {$productId};";
+	if($action === 'down') { //убавить кол-во товара
+		$sqlGood = "update `orders` set amount = amount - 1, created_at = '" . date("Y-m-d H:i:s") . " ' where user_id = {$userId} and product_id = {$productId};";
+		$sqlProduct = "update product set quantity = quantity + 1 where id = {$productId};";
+		}
+	if($action === 'del') {  //удалить товар
+		$sqlGood = "delete from `orders` where user_id = {$userId} and product_id = {$productId};";
 		$amount = selectRowParamToMarket('orders', 'amount', "user_id = {$userId} and product_id = {$productId}");
 		$amountDel = $amount['amount'];
-		//var_dump($amountDel);
-		$sqlChange = "update product set quantity = quantity + {$amountDel} where id = {$productId};";
+		$sqlProduct = "update product set quantity = quantity + {$amountDel} where id = {$productId};";
 	}
-	//echo "<br>" . $sqlChange . "<br>";
-	executeQuery($sql, DB_MARKET);
-	executeQuery($sqlChange, DB_MARKET);
-	//showGoods();
+	
+	if(($sqlGood !== '' || $sqlGood !== null) && ($sqlProduct !== '' || $sqlProduct !== null)) {
+		//echo $sqlGood . "<br>" . $sqlProduct;
+		$goodsChange = executeQuery($sqlGood, DB_MARKET);
+		$productChange = executeQuery($sqlProduct, DB_MARKET);
+	}
+	if(!$goodsChange && !$productChange) {
+		echo "Попытка не удалась. Попробуйте ещё раз!";
+	}
+	
 }
 
 	/*if(isset($_POST['delGood'])) {

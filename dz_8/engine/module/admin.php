@@ -8,7 +8,7 @@ $vars = [
     'title_h2_2' => 'Товары',
 	'orders' => showOrders(),
     'sumOrders' => addSumArrValues(showOrders()), // в functions.php
-	//'ordersUser' => showOrdersUser($idUser)
+	'products' => showProducts()
 	];
 
 require_once TPL_DIR . 'admin.php';

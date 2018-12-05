@@ -56,7 +56,7 @@ function authWithCredentials(){
 		$sql = "select `id` from user where `login` = '{$_SESSION['user']}'";
 		$userId = getRowResult($sql, DB_USER);
 		$_SESSION['user_id'] = $userId['id'];
-    }
+	}
     return $isAuth;
 }
 
@@ -87,4 +87,9 @@ function checkPassword($password, $hash){
 
 function alreadyLoggedIn(){
     return isset($_SESSION['user']);
+}
+function loggedInAdmin() {
+	if(alreadyLoggedIn() && $_SESSION['user'] === 'admin') {
+		return true;
+	}
 }
